@@ -45,6 +45,27 @@ class _NotesPageState extends State<NotesPage> {
     context.watch<NoteDatabase>().fetchNotes();
   }
 
+  void updateNote(Note note) {
+    textEditController.text = note.text;
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text("Update Note"),
+        content: TextField(controller: textEditController,),
+         actions: [
+           MaterialButton(
+             onPressed: () {
+               context.read<NoteDatabase>().updateNote(note.id, textEditController.text);
+               textEditController.clear();
+               Navigator.pop(context);
+             },
+             child: const Text("Update"),
+           )
+         ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final noteDatabase = context.watch<NoteDatabase>();
@@ -63,6 +84,10 @@ class _NotesPageState extends State<NotesPage> {
 
           return ListTile(
             title: Text(note.text),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [],
+            ),
           );
         },
       ),
