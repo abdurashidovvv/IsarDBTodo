@@ -14,24 +14,30 @@ class NotesPage extends StatefulWidget {
 class _NotesPageState extends State<NotesPage> {
   final textEditController = TextEditingController();
 
+  @override
+  void initState() {
+    super.initState();
+
+    readNotes();
+  }
+
   void createNote() {
     showDialog(
       context: context,
-      builder: (context) =>
-          AlertDialog(
-            content: TextField(
-              controller: textEditController,
-            ),
-            actions: [
-              MaterialButton(
-                onPressed: () {
-                  context.read<NoteDatabase>().addNote(textEditController.text);
-                  Navigator.pop(context);
-                },
-                child: const Text("Create"),
-              )
-            ],
-          ),
+      builder: (context) => AlertDialog(
+        content: TextField(
+          controller: textEditController,
+        ),
+        actions: [
+          MaterialButton(
+            onPressed: () {
+              context.read<NoteDatabase>().addNote(textEditController.text);
+              Navigator.pop(context);
+            },
+            child: const Text("Create"),
+          )
+        ],
+      ),
     );
   }
 
