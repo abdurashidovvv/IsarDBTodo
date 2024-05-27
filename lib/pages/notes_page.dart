@@ -51,22 +51,26 @@ class _NotesPageState extends State<NotesPage> {
       context: context,
       builder: (context) => AlertDialog(
         title: Text("Update Note"),
-        content: TextField(controller: textEditController,),
-         actions: [
-           MaterialButton(
-             onPressed: () {
-               context.read<NoteDatabase>().updateNote(note.id, textEditController.text);
-               textEditController.clear();
-               Navigator.pop(context);
-             },
-             child: const Text("Update"),
-           )
-         ],
+        content: TextField(
+          controller: textEditController,
+        ),
+        actions: [
+          MaterialButton(
+            onPressed: () {
+              context
+                  .read<NoteDatabase>()
+                  .updateNote(note.id, textEditController.text);
+              textEditController.clear();
+              Navigator.pop(context);
+            },
+            child: const Text("Update"),
+          )
+        ],
       ),
     );
   }
 
-  void deleteNote(int id){
+  void deleteNote(int id) {
     context.read<NoteDatabase>().deleteNote(id);
   }
 
@@ -90,7 +94,16 @@ class _NotesPageState extends State<NotesPage> {
             title: Text(note.text),
             trailing: Row(
               mainAxisSize: MainAxisSize.min,
-              children: [],
+              children: [
+                IconButton(
+                  onPressed: () => updateNote(note),
+                  icon: const Icon(Icons.edit),
+                ),
+                IconButton(
+                  onPressed: () => deleteNote(note.id),
+                  icon: const Icon(Icons.delete),
+                ),
+              ],
             ),
           );
         },
