@@ -66,6 +66,10 @@ class _NotesPageState extends State<NotesPage> {
     );
   }
 
+  void deleteNote(int id){
+    context.read<NoteDatabase>().deleteNote(id);
+  }
+
   @override
   Widget build(BuildContext context) {
     final noteDatabase = context.watch<NoteDatabase>();
